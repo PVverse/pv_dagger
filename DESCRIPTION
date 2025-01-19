@@ -2,9 +2,11 @@ Package: PVdagger
 Title: Visualization of Causal Structures in Pharmacovigilance Data Using DAGs
 Version: 0.0.0.9000
 Authors@R: 
-    person("Michele", "Fusaroli", "michele.fusaroli@who-umc.org", role = c("aut", "cre"))
+    person("Michele", "Fusaroli", , "first.last@example.com", role = c("aut", "cre"))
 Description: The PVdagger package provides tools for creating and visualizing Directed Acyclic Graphs (DAGs) with various biases and paths. This package is particularly useful for researchers and signal managers in pharmacovigilance who need to illustrate causal relationships and potential biases in their data. The package leverages the DiagrammeR library to generate high-quality DAGs.
 License: MIT + file LICENSE
 Encoding: UTF-8
+Depends: 
+    DiagrammeR
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
