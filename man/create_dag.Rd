@@ -29,29 +29,29 @@ create_dag(
 
 \item{label_inquiry}{Character. The label for the inquiry. Default is "Causal Inquiry".}
 
-\item{confounder_path}{List. A list containing nodes and signs for the confounder path.}
+\item{confounder_path}{List. A list containing nodes and signs for the confounder path. By deafault it does not show it.}
 
-\item{surrogate_confounder}{List. A list containing the surrogate confounder and its root.}
+\item{surrogate_confounder}{List. A list containing the surrogate confounder and its root. By deafault it does not show it.}
 
-\item{collider_path}{List. A list containing nodes and signs for the collider path.}
+\item{collider_path}{List. A list containing nodes and signs for the collider path. By deafault it does not show it.}
 
-\item{notoriety_bias}{Character. The notoriety bias variable.}
+\item{notoriety_bias}{Character. The notoriety bias variable. By deafault it does not show it.}
 
-\item{drug_competition_bias}{Character. The drug competition bias variable.}
+\item{drug_competition_bias}{Character. The drug competition bias variable. By deafault it does not show it.}
 
-\item{event_competition_bias}{Character. The event competition bias variable.}
+\item{event_competition_bias}{Character. The event competition bias variable. By deafault it does not show it.}
 
-\item{background_dilution}{List. A list containing the drug and event for background dilution.}
+\item{background_dilution}{List. A list containing the drug and event for background dilution. By deafault it does not show it.}
 
 \item{add_measurements}{Logical. Whether to add measurements. Default is FALSE.}
 
-\item{ascertainment_drug}{Character. The ascertainment for the drug. Default is NA.}
+\item{ascertainment_drug}{Character. Whether to draw an ascertainment bias introduced by the drug. Default is NA.}
 
-\item{ascertainment_event}{Character. The ascertainment for the event. Default is NA.}
+\item{ascertainment_event}{Character. Whether to draw an ascertainment bias introduced by the event. Default is NA.}
 
-\item{rankdir}{Character. The direction of the graph layout. Default is "LR".}
+\item{rankdir}{Character. The direction of the graph layout. Default is "LR", or left to right. It can also be set "TB" or top to bottom.}
 
-\item{scenario}{Character. The scenario type. Default is "inquiry".}
+\item{scenario}{Character. The causal scenario type. Default is "inquiry", leaving the question mark on the relation between drug and event. It can also be causal and non-causal.}
 }
 \value{
 A DAG created using the \code{DiagrammeR} package.

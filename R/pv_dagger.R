@@ -5,18 +5,18 @@
 #' @param exposure_name Character. The name of the exposure variable.
 #' @param outcome_name Character. The name of the outcome variable.
 #' @param label_inquiry Character. The label for the inquiry. Default is "Causal Inquiry".
-#' @param confounder_path List. A list containing nodes and signs for the confounder path.
-#' @param surrogate_confounder List. A list containing the surrogate confounder and its root.
-#' @param collider_path List. A list containing nodes and signs for the collider path.
-#' @param notoriety_bias Character. The notoriety bias variable.
-#' @param drug_competition_bias Character. The drug competition bias variable.
-#' @param event_competition_bias Character. The event competition bias variable.
-#' @param background_dilution List. A list containing the drug and event for background dilution.
+#' @param confounder_path List. A list containing nodes and signs for the confounder path. By deafault it does not show it.
+#' @param surrogate_confounder List. A list containing the surrogate confounder and its root. By deafault it does not show it.
+#' @param collider_path List. A list containing nodes and signs for the collider path. By deafault it does not show it.
+#' @param notoriety_bias Character. The notoriety bias variable. By deafault it does not show it.
+#' @param drug_competition_bias Character. The drug competition bias variable. By deafault it does not show it.
+#' @param event_competition_bias Character. The event competition bias variable. By deafault it does not show it.
+#' @param background_dilution List. A list containing the drug and event for background dilution. By deafault it does not show it.
 #' @param add_measurements Logical. Whether to add measurements. Default is FALSE.
-#' @param ascertainment_drug Character. The ascertainment for the drug. Default is NA.
-#' @param ascertainment_event Character. The ascertainment for the event. Default is NA.
-#' @param rankdir Character. The direction of the graph layout. Default is "LR".
-#' @param scenario Character. The scenario type. Default is "inquiry".
+#' @param ascertainment_drug Character. Whether to draw an ascertainment bias introduced by the drug. Default is NA.
+#' @param ascertainment_event Character. Whether to draw an ascertainment bias introduced by the event. Default is NA.
+#' @param rankdir Character. The direction of the graph layout. Default is "LR", or left to right. It can also be set "TB" or top to bottom.
+#' @param scenario Character. The causal scenario type. Default is "inquiry", leaving the question mark on the relation between drug and event. It can also be causal and non-causal.
 #'
 #' @return A DAG created using the `DiagrammeR` package.
 #' @import DiagrammeR
