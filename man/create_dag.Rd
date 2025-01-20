@@ -18,6 +18,7 @@ create_dag(
   add_measurements = FALSE,
   ascertainment_drug = NA,
   ascertainment_event = NA,
+  additional_rows = "",
   rankdir = "LR",
   scenario = "inquiry"
 )
@@ -48,6 +49,8 @@ create_dag(
 \item{ascertainment_drug}{Character. Whether to draw an ascertainment bias introduced by the drug. Default is NA.}
 
 \item{ascertainment_event}{Character. Whether to draw an ascertainment bias introduced by the event. Default is NA.}
+
+\item{additional_rows}{Character. Parameter to add more lines for customised DAGs.}
 
 \item{rankdir}{Character. The direction of the graph layout. Default is "LR", or left to right. It can also be set "TB" or top to bottom.}
 
