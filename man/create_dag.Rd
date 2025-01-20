@@ -30,7 +30,7 @@ create_dag(
 
 \item{label_inquiry}{Character. The label for the inquiry. Default is "Causal Inquiry".}
 
-\item{confounder_path}{List. A list containing nodes and signs for the confounder path. By deafault it does not show it.}
+\item{confounder_path}{List. A list containing nodes and signs (and potentially direction) for the confounder path. By deafault it does not show it.}
 
 \item{surrogate_confounder}{List. A list containing the surrogate confounder and its root. By deafault it does not show it.}
 
