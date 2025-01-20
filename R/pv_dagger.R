@@ -5,7 +5,7 @@
 #' @param exposure_name Character. The name of the exposure variable.
 #' @param outcome_name Character. The name of the outcome variable.
 #' @param label_inquiry Character. The label for the inquiry. Default is "Causal Inquiry".
-#' @param confounder_path List. A list containing nodes and signs for the confounder path. By deafault it does not show it.
+#' @param confounder_path List. A list containing nodes and signs (and potentially direction) for the confounder path. By deafault it does not show it.
 #' @param surrogate_confounder List. A list containing the surrogate confounder and its root. By deafault it does not show it.
 #' @param collider_path List. A list containing nodes and signs for the collider path. By deafault it does not show it.
 #' @param notoriety_bias Character. The notoriety bias variable. By deafault it does not show it.
@@ -93,7 +93,8 @@ create_dag <- function(exposure_name, outcome_name,label_inquiry = "Causal Inqui
       ", confounder_path$nodes[i], " [shape = ellipse, style = filled, fillcolor = white, penwidth=3,color=brown]")
       if (i > 1) {
         dag <- paste0(dag,"
-        ",  confounder_path$nodes[i-1], " -> ", confounder_path$nodes[i], " [label = '", confounder_path$signs[i], "', color = ", path_color, "]")
+        ",  confounder_path$nodes[i-1], " -> ", confounder_path$nodes[i], " [label = '", confounder_path$signs[i], "', color = ", path_color,
+                      if(!is.null(confounder_path$direction[i])&& !is.na(confounder_path$direction[i])){if(confounder_path$direction[i]=="back"){", dir = back"}}, "]")
       }
     }
 
