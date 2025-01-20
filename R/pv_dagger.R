@@ -15,6 +15,7 @@
 #' @param add_measurements Logical. Whether to add measurements. Default is FALSE.
 #' @param ascertainment_drug Character. Whether to draw an ascertainment bias introduced by the drug. Default is NA.
 #' @param ascertainment_event Character. Whether to draw an ascertainment bias introduced by the event. Default is NA.
+#' @param additional_rows Character. Parameter to add more lines for customised DAGs.
 #' @param rankdir Character. The direction of the graph layout. Default is "LR", or left to right. It can also be set "TB" or top to bottom.
 #' @param scenario Character. The causal scenario type. Default is "inquiry", leaving the question mark on the relation between drug and event. It can also be causal and non-causal.
 #'
@@ -31,6 +32,7 @@ create_dag <- function(exposure_name, outcome_name,label_inquiry = "Causal Inqui
                        drug_competition_bias = NULL, event_competition_bias = NULL,
                        background_dilution = NULL, add_measurements = FALSE,
                        ascertainment_drug=NA,ascertainment_event=NA,
+                       additional_rows = "",
                        rankdir="LR",
                        scenario="inquiry") {
   dag <- paste0("strict digraph DAG {
@@ -240,7 +242,7 @@ create_dag <- function(exposure_name, outcome_name,label_inquiry = "Causal Inqui
     '",outcome_name,"*' -> Re [label = '+', color = crimson, style = dashed]
 ")
   }
-
+  dag <- paste0(dag,additional_rows)
   # Define ranks for node positioning
   dag <- paste0(dag,
                 if(!is.null(confounder_path)) {paste0("
