@@ -109,7 +109,7 @@ create_dag <- function(exposure_name, outcome_name,label_inquiry = "Causal Inqui
 
     # Add surrogate variable if provided
     if (!is.null(surrogate_confounder)) {dag <- paste0(dag,"
-     ",surrogate_confounder$surrogate, " [shape = ellipse, style = filled, fillcolor = white, penwidth=3, color=gray]
+     ",surrogate_confounder$surrogate, " [shape = ellipse, style = filled, fillcolor = white, penwidth=3, color= peru]
     ", surrogate_confounder$root, " -> ", surrogate_confounder$surrogate, " [label = '+', color = black]")
     }
     if (add_measurements){
