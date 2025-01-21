@@ -134,7 +134,7 @@ create_dag <- function(exposure_name, outcome_name,label_inquiry = "Causal Inqui
           label= '",collider_path$label,"';")
     for (i in seq_along(collider_path$nodes)) {
       dag <- paste0(dag,"
-      ", collider_path$nodes[i], " [shape = ellipse, style = filled, fillcolor = white, penwidth=3,color=brown]")
+      ", collider_path$nodes[i], " [shape = square, style = filled, fillcolor = white, penwidth=3,color=brown]")
       if (i > 1) {
         dag <- paste0(dag, "
         ", collider_path$nodes[i-1], " -> ",collider_path$nodes[i], " [label = '", collider_path$signs[i], "', color = ", path_color, "]")
