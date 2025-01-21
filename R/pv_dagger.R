@@ -68,12 +68,19 @@ create_dag <- function(exposure_name, outcome_name,label_inquiry = "Causal Inqui
       ", outcome_name, " -> '", outcome_name, "*' [label = '+', color = black]")
     if (!is.na(ascertainment_drug)) {
       dag <- paste0(dag, "
-              ", exposure_name, " -> '", outcome_name, "*' [label = '",ascertainment_drug,"', color = ",ifelse(ascertainment_drug=="+","red",
+      ascertainment [shape = ellipse, style = filled, fillcolor = white, penwidth=3,color=orange]
+              ", exposure_name, " -> ascertainment [label = '",ascertainment_drug,"', color = ",ifelse(ascertainment_drug=="+","red",
+                                                                                                               ifelse(ascertainment_drug=="-","blue","black")),"]",
+      "
+              ascertainment -> '", outcome_name, "*' [label = '",ascertainment_drug,"', color = ",ifelse(ascertainment_drug=="+","red",
                                                                                                                ifelse(ascertainment_drug=="-","blue","black")),"]")
     }
     if (!is.na(ascertainment_event)) {
       dag <- paste0(dag, "
-              ", outcome_name, " -> '", exposure_name, "*' [label = '",ascertainment_event,"', color = ",ifelse(ascertainment_event=="+","red",
+      ascertainment [shape = ellipse, style = filled, fillcolor = white, penwidth=3,color=orange]
+              ", outcome_name, " -> ascertainment [label = '",ascertainment_event,"', color = ",ifelse(ascertainment_event=="+","red",
+                                                                                                                ifelse(ascertainment_event=="-","blue","black")),"]","
+                    ascertainment -> '", exposure_name, "*' [label = '",ascertainment_event,"', color = ",ifelse(ascertainment_event=="+","red",
                                                                                                                 ifelse(ascertainment_event=="-","blue","black")),"]")
     }
   }
