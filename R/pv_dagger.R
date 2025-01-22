@@ -210,7 +210,9 @@ create_dag <- function(exposure_name, outcome_name,label_inquiry = "Causal Inqui
     }
     '",exposure_name,"*' -> ", notoriety_bias," [label = '+', color = crimson, constraint=false, style = dashed,dir = back]
     '",outcome_name,"*' -> ", notoriety_bias," [label = '+', color = crimson, constraint=false, style = dashed,dir = back]
-    Rd [label = 'Re', shape = square, style = filled, fillcolor = white, penwidth=3,color=pink]
+    ",notoriety_bias,"*' -> Rd [label = '+', color = crimson, constraint=false, style = dashed]
+    ",notoriety_bias,"*' -> Re [label = '+', color = crimson, constraint=false, style = dashed]
+    Rd [label = 'Ed', shape = square, style = filled, fillcolor = white, penwidth=3,color=pink]
     Re [label = 'Re', shape = square, style = filled, fillcolor = white, penwidth=3,color=pink]
     '",outcome_name,"*' -> Re [label = '+', color = black, style = dashed]
     '",exposure_name,"*' -> Rd [label = '+', color = black, style = dashed]
