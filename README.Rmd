@@ -34,7 +34,7 @@ pak::pak("PVverse/pv_dagger")
 
 This is how to draw the causal inquiry, together with the two possible scenarios.
 
-```{r example, echo = FALSE}
+```{r example, results="hide"}
 library(PVdagger)
 create_dag("D","E", scenario ="inquiry")
 create_dag("D", "E", scenario = "causal")
@@ -44,7 +44,7 @@ create_dag("D", "E", scenario = "non-causal")
 
 This is how to draw confounders and colliders
 
-```{r}
+```{r, results="hide"}
 create_dag("D", "E", label_inquiry = "", scenario = "non-causal",
            confounder_path = list(nodes = c("C"), signs = c("",""),
                                   label=""))
@@ -55,7 +55,7 @@ create_dag("D", "E", label_inquiry = "", scenario = "non-causal",
 
 This is how to add measurements and draw ascertainment bias
 
-```{r }
+```{r, results="hide"}
 create_dag("D", "E", scenario = "inquiry", add_measurements = TRUE,
            label_inquiry ="")
 create_dag("D", "E", scenario = "non-causal", add_measurements = TRUE,
@@ -68,13 +68,13 @@ create_dag("D", "E", scenario = "non-causal", add_measurements = TRUE,
 
 
 This is how to add reporting
-```{r }
+```{r, results="hide"}
 create_dag("D", "E", scenario = "inquiry", add_measurements = TRUE, add_reporting = TRUE,
            label_inquiry ="")
 ```
 
 This is how to add reporting biases
-```{r }
+```{r, results="hide"}
 create_dag("D", "E", scenario = "non-causal",notoriety_bias = "Notoriety", add_measurements = TRUE,
            label_inquiry ="Causal Inquiry",drug_competition_bias = "D2",
            event_competition_bias="E2",
