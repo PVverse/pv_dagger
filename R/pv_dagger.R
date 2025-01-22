@@ -212,7 +212,7 @@ create_dag <- function(exposure_name, outcome_name,label_inquiry = "Causal Inqui
     '",outcome_name,"*' -> ", notoriety_bias," [label = '+', color = crimson, constraint=false, style = dashed,dir = back]
     ",notoriety_bias," -> Rd [label = '+', color = crimson, constraint=false, style = dashed]
     ",notoriety_bias," -> Re [label = '+', color = crimson, constraint=false, style = dashed]
-    Rd [label = 'Ed', shape = square, style = filled, fillcolor = white, penwidth=3,color=pink]
+    Rd [label = 'Rd', shape = square, style = filled, fillcolor = white, penwidth=3,color=pink]
     Re [label = 'Re', shape = square, style = filled, fillcolor = white, penwidth=3,color=pink]
     '",outcome_name,"*' -> Re [label = '+', color = black, style = dashed]
     '",exposure_name,"*' -> Rd [label = '+', color = black, style = dashed]
@@ -280,7 +280,7 @@ create_dag <- function(exposure_name, outcome_name,label_inquiry = "Causal Inqui
                                              if (!is.null(surrogate_confounder)) {paste0("; '",surrogate_confounder$surrogate, "*'", collapse = "; ")}," }")},
                 ifelse(!is.null(notoriety_bias),
                        paste0("
-            { rank = same; Rd -> Re -> ",notoriety_bias," [ style = invis ]}"),
+            { rank = same; Rd -> ",notoriety_bias," -> Re [ style = invis ]}"),
                        ifelse(!is.null(drug_competition_bias)|!is.null(event_competition_bias)|!is.null(background_dilution),
                               paste0("
                     { rank = same; Rd -> Re  [ style = invis ]}"),
