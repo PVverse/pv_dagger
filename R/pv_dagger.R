@@ -26,64 +26,74 @@
 #'
 #' @examples
 #' create_dag("Exposure", "Outcome")
-create_dag <- function(exposure_name, outcome_name,label_inquiry = "Causal Inquiry",
+create_dag <- function(exposure_name, outcome_name, label_inquiry = "Causal Inquiry",
                        confounder_path = NULL, surrogate_confounder = NULL,
                        collider_path = NULL,
                        notoriety_bias = NULL,
                        drug_competition_bias = NULL, event_competition_bias = NULL,
                        background_dilution = NULL, add_measurements = FALSE,
                        add_reporting = FALSE,
-                       ascertainment_drug=NA,ascertainment_event=NA,
+                       ascertainment_drug = NA, ascertainment_event = NA,
                        additional_rows = "",
-                       rankdir="LR",
-                       scenario="inquiry") {
-  dag <- paste0("strict digraph DAG {
+                       rankdir = "LR",
+                       scenario = "inquiry") {
+  dag <- paste0(
+    "strict digraph DAG {
 
-      graph [layout = dot, rankdir = ",rankdir,"]
+      graph [layout = dot, rankdir = ", rankdir, "]
 
       newrank=true
 
-      ",ifelse(!is.null(notoriety_bias),
-               paste0("Rd ",notoriety_bias," Re"),
-               ifelse(!is.null(drug_competition_bias)|!is.null(event_competition_bias)|!is.null(background_dilution),
-                      paste0("Rd Re"),
-                      "")),
-               "
+      ", ifelse(!is.null(notoriety_bias),
+      paste0("Rd ", notoriety_bias, " Re"),
+      ifelse(!is.null(drug_competition_bias) | !is.null(event_competition_bias) | !is.null(background_dilution),
+        paste0("Rd Re"),
+        ""
+      )
+    ),
+    "
       subgraph cluster_8 {
       style=bold;
       color=lemonchiffon1;
-      label= '",label_inquiry,"';
+      label= '", label_inquiry, "';
     # Nodes
-    ",exposure_name," [shape = ellipse, style = filled, fillcolor = white, penwidth=3,color=brown]
-    ",outcome_name," [shape = ellipse, style = filled, fillcolor = white, penwidth=3,color=brown]
+    ", exposure_name, " [shape = ellipse, style = filled, fillcolor = white, penwidth=3,color=brown]
+    ", outcome_name, " [shape = ellipse, style = filled, fillcolor = white, penwidth=3,color=brown]
 
     # Edge between exposure and outcome
-    ",exposure_name," -> ",outcome_name," [label = ",
-               ifelse(scenario=="inquiry","'?'","''"),
-               ", color = ",ifelse(scenario=="inquiry","lightgrey",ifelse(scenario=="causal","black","invis")),"]")
+    ", exposure_name, " -> ", outcome_name, " [label = ",
+    ifelse(scenario == "inquiry", "'?'", "''"),
+    ", color = ", ifelse(scenario == "inquiry", "lightgrey", ifelse(scenario == "causal", "black", "invis")), "]"
+  )
   # Add measurements if requested
   if (add_measurements) {
     dag <- paste0(dag, "
-      '", exposure_name,"*' [shape = ellipse, style = filled, fillcolor = white, penwidth=3,color=orange]
+      '", exposure_name, "*' [shape = ellipse, style = filled, fillcolor = white, penwidth=3,color=orange]
       ", exposure_name, " -> '", exposure_name, "*' [label = '+', color = black]
-      '", outcome_name,"*' [shape = ellipse, style = filled, fillcolor = white, penwidth=3,color=orange]
+      '", outcome_name, "*' [shape = ellipse, style = filled, fillcolor = white, penwidth=3,color=orange]
       ", outcome_name, " -> '", outcome_name, "*' [label = '+', color = black]")
     if (!is.na(ascertainment_drug)) {
-      dag <- paste0(dag, "
+      dag <- paste0(
+        dag, "
       ascertainment [shape = ellipse, style = filled, fillcolor = white, penwidth=3,color=orange]
-              ", exposure_name, " -> ascertainment [label = '",ascertainment_drug,"', color = ",ifelse(ascertainment_drug=="+","red",
-                                                                                                               ifelse(ascertainment_drug=="-","blue","black")),"]",
-      "
-              ascertainment -> '", outcome_name, "*' [label = '",ascertainment_drug,"', color = ",ifelse(ascertainment_drug=="+","red",
-                                                                                                               ifelse(ascertainment_drug=="-","blue","black")),"]")
+              ", exposure_name, " -> ascertainment [label = '", ascertainment_drug, "', color = ", ifelse(ascertainment_drug == "+", "red",
+          ifelse(ascertainment_drug == "-", "blue", "black")
+        ), "]",
+        "
+              ascertainment -> '", outcome_name, "*' [label = '", ascertainment_drug, "', color = ", ifelse(ascertainment_drug == "+", "red",
+          ifelse(ascertainment_drug == "-", "blue", "black")
+        ), "]"
+      )
     }
     if (!is.na(ascertainment_event)) {
       dag <- paste0(dag, "
       ascertainment [shape = ellipse, style = filled, fillcolor = white, penwidth=3,color=orange]
-              ", outcome_name, " -> ascertainment [label = '",ascertainment_event,"', color = ",ifelse(ascertainment_event=="+","red",
-                                                                                                                ifelse(ascertainment_event=="-","blue","black")),"]","
-                    ascertainment -> '", exposure_name, "*' [label = '",ascertainment_event,"', color = ",ifelse(ascertainment_event=="+","red",
-                                                                                                                ifelse(ascertainment_event=="-","blue","black")),"]")
+              ", outcome_name, " -> ascertainment [label = '", ascertainment_event, "', color = ", ifelse(ascertainment_event == "+", "red",
+        ifelse(ascertainment_event == "-", "blue", "black")
+      ), "]", "
+                    ascertainment -> '", exposure_name, "*' [label = '", ascertainment_event, "', color = ", ifelse(ascertainment_event == "+", "red",
+        ifelse(ascertainment_event == "-", "blue", "black")
+      ), "]")
     }
   }
   dag <- paste0(dag, "
@@ -91,88 +101,98 @@ create_dag <- function(exposure_name, outcome_name,label_inquiry = "Causal Inqui
   # Add confounder path if provided
   if (!is.null(confounder_path)) {
     num_minuses <- sum(confounder_path$signs == "-")
-    path_color <- ifelse(any(confounder_path$signs==""),"black",ifelse(num_minuses %% 2 == 1, "blue", "crimson"))
+    path_color <- ifelse(any(confounder_path$signs == ""), "black", ifelse(num_minuses %% 2 == 1, "blue", "crimson"))
     dag <- paste0(
       dag, "
       subgraph cluster_0 {
       style=bold;
       color=lightgrey;
-      label = '",confounder_path$label,"';")
+      label = '", confounder_path$label, "';"
+    )
     for (i in 1:length(confounder_path$nodes)) {
       dag <- paste0(
         dag, "
-      ", confounder_path$nodes[i], " [shape = ellipse, style = filled, fillcolor = white, penwidth=3,color=brown]")
+      ", confounder_path$nodes[i], " [shape = ellipse, style = filled, fillcolor = white, penwidth=3,color=brown]"
+      )
       if (i > 1) {
-        dag <- paste0(dag,"
-        ",  confounder_path$nodes[i-1], " -> ", confounder_path$nodes[i], " [label = '", confounder_path$signs[i], "', color = ", path_color,
-                      if(!is.null(confounder_path$direction[i])&& !is.na(confounder_path$direction[i])){if(confounder_path$direction[i]=="back"){", dir = back"}}, "]")
+        dag <- paste0(
+          dag, "
+        ", confounder_path$nodes[i - 1], " -> ", confounder_path$nodes[i], " [label = '", confounder_path$signs[i], "', color = ", path_color,
+          if (!is.null(confounder_path$direction[i]) && !is.na(confounder_path$direction[i])) {
+            if (confounder_path$direction[i] == "back") {
+              ", dir = back"
+            }
+          }, "]"
+        )
       }
     }
 
     # Add surrogate variable if provided
-    if (!is.null(surrogate_confounder)) {dag <- paste0(dag,"
-     ",surrogate_confounder$surrogate, " [shape = ellipse, style = filled, fillcolor = white, penwidth=3, color= peru]
+    if (!is.null(surrogate_confounder)) {
+      dag <- paste0(dag, "
+     ", surrogate_confounder$surrogate, " [shape = ellipse, style = filled, fillcolor = white, penwidth=3, color= peru]
     ", surrogate_confounder$root, " -> ", surrogate_confounder$surrogate, " [label = '+', color = black]")
     }
-    if (add_measurements){
-      m_nodes <- c(confounder_path$nodes,if (!is.null(surrogate_confounder)) {surrogate_confounder$surrogate})
+    if (add_measurements) {
+      m_nodes <- c(confounder_path$nodes, if (!is.null(surrogate_confounder)) {
+        surrogate_confounder$surrogate
+      })
       string <- ""
       for (n in 1:length(m_nodes)) {
-        m_node <- paste0("'",m_nodes[[n]], "*'")
+        m_node <- paste0("'", m_nodes[[n]], "*'")
         string <- paste0(string, "
           ", m_node, " [shape = ellipse, style = filled, fillcolor = white, penwidth=3,color=orange]
           ", m_nodes[[n]], " -> ", m_node, " [label = '+', color = black]")
       }
-      dag <- paste0(dag,string)
+      dag <- paste0(dag, string)
     }
-    dag <- paste0(dag,"}
-    ", confounder_path$nodes[1], " -> ",exposure_name," [label = '", confounder_path$signs[1], "', color = ", path_color, "]
-    ", confounder_path$nodes[i], " -> ",outcome_name," [label = '", confounder_path$signs[i + 1], "', color = ", path_color, "]"
-    )
+    dag <- paste0(dag, "}
+    ", confounder_path$nodes[1], " -> ", exposure_name, " [label = '", confounder_path$signs[1], "', color = ", path_color, "]
+    ", confounder_path$nodes[i], " -> ", outcome_name, " [label = '", confounder_path$signs[i + 1], "', color = ", path_color, "]")
   }
 
 
   # Add collider path if provided
   if (!is.null(collider_path)) {
     num_minuses <- sum(collider_path$signs == "-")
-    path_color <- ifelse(any(collider_path$signs==""),"black",ifelse(num_minuses %% 2 == 0, "blue", "crimson"))
+    path_color <- ifelse(any(collider_path$signs == ""), "black", ifelse(num_minuses %% 2 == 0, "blue", "crimson"))
     dag <- paste0(dag, "
       subgraph cluster_1 {
           style=bold;
           color=lightgrey;
-          label= '",collider_path$label,"';")
+          label= '", collider_path$label, "';")
     for (i in seq_along(collider_path$nodes)) {
-      dag <- paste0(dag,"
+      dag <- paste0(dag, "
       ", collider_path$nodes[i], " [shape = square, style = filled, fillcolor = white, penwidth=3,color=brown]")
       if (i > 1) {
         dag <- paste0(dag, "
-        ", collider_path$nodes[i-1], " -> ",collider_path$nodes[i], " [label = '", collider_path$signs[i], "', color = ", path_color, "]")
+        ", collider_path$nodes[i - 1], " -> ", collider_path$nodes[i], " [label = '", collider_path$signs[i], "', color = ", path_color, "]")
       }
     }
-    if (add_measurements){
+    if (add_measurements) {
       m_nodes <- collider_path$nodes
       string <- ""
       for (n in 1:length(m_nodes)) {
-        m_node <- paste0("'",m_nodes[[n]], "*'")
+        m_node <- paste0("'", m_nodes[[n]], "*'")
         string <- paste0(string, "
           ", m_node, " [shape = ellipse, style = filled, fillcolor = white, penwidth=3,color=orange]
           ", m_nodes[[n]], " -> ", m_node, " [label = '+', color = black]")
       }
-      dag <- paste0(dag,string)
+      dag <- paste0(dag, string)
     }
     # Connect the last collider node to the outcome
     dag <- paste0(dag, "}
-    ",exposure_name," -> '", collider_path$nodes[1], "' [label = '", collider_path$signs[i], "', color = ", path_color, "]
-    ",outcome_name," -> '", collider_path$nodes[i], "' [label = '", collider_path$signs[i + 1], "', color = ", path_color, "]")
+    ", exposure_name, " -> '", collider_path$nodes[1], "' [label = '", collider_path$signs[i], "', color = ", path_color, "]
+    ", outcome_name, " -> '", collider_path$nodes[i], "' [label = '", collider_path$signs[i + 1], "', color = ", path_color, "]")
   }
 
   # Add reporting if true
   if (add_reporting == TRUE) {
-    dag <- paste0(dag,"
+    dag <- paste0(dag, "
     Rd [label = 'Rd', shape = square, style = filled, fillcolor = white, penwidth=3,color=pink]
     Re [label = 'Re', shape = square, style = filled, fillcolor = white, penwidth=3,color=pink]
-    '",outcome_name,"*' -> Re [label = '+', color = black, style = dashed]
-    '",exposure_name,"*' -> Rd [label = '+', color = black, style = dashed]
+    '", outcome_name, "*' -> Re [label = '+', color = black, style = dashed]
+    '", exposure_name, "*' -> Rd [label = '+', color = black, style = dashed]
 ")
   }
 
@@ -180,7 +200,7 @@ create_dag <- function(exposure_name, outcome_name,label_inquiry = "Causal Inqui
 
   # Add drug competition bias if provided
   if (!is.null(drug_competition_bias)) {
-    dag <- paste0(dag,"
+    dag <- paste0(dag, "
       subgraph cluster_4 {
       style=bold;
       color=lightgrey;
@@ -192,9 +212,9 @@ create_dag <- function(exposure_name, outcome_name,label_inquiry = "Causal Inqui
     Drug2 -> 'Drug2*' [label = '+', color = blue, style = dashed]
     'Drug2*' -> Rd [label = '+', color = blue, style = dashed]}
     Re [label = 'Re', shape = square, style = filled, fillcolor = white, penwidth=3,color=pink]
-    '",outcome_name,"*' -> Re [label = '+', color = black, style = dashed]
-    '",exposure_name,"*' -> Rd [label = '+', color = blue, style = dashed]
-    Drug2 -> ",outcome_name," [label = '+', color = blue, style = dashed]
+    '", outcome_name, "*' -> Re [label = '+', color = black, style = dashed]
+    '", exposure_name, "*' -> Rd [label = '+', color = blue, style = dashed]
+    Drug2 -> ", outcome_name, " [label = '+', color = blue, style = dashed]
 ")
   }
 
@@ -205,22 +225,22 @@ create_dag <- function(exposure_name, outcome_name,label_inquiry = "Causal Inqui
           style=bold;
           color=lightgrey;")
     dag <- paste0(dag, "
-    ", notoriety_bias," [shape = ellipse, style = filled, fillcolor = white, penwidth=3,color=pink]
+    ", notoriety_bias, " [shape = ellipse, style = filled, fillcolor = white, penwidth=3,color=pink]
     }
-    '",exposure_name,"*' -> ", notoriety_bias," [label = '+', color = crimson, constraint=false, style = dashed,dir = back]
-    '",outcome_name,"*' -> ", notoriety_bias," [label = '+', color = crimson, constraint=false, style = dashed,dir = back]
+    '", exposure_name, "*' -> ", notoriety_bias, " [label = '+', color = crimson, constraint=false, style = dashed,dir = back]
+    '", outcome_name, "*' -> ", notoriety_bias, " [label = '+', color = crimson, constraint=false, style = dashed,dir = back]
     Rd [label = 'Rd', shape = square, style = filled, fillcolor = white, penwidth=3,color=pink]
     Re [label = 'Re', shape = square, style = filled, fillcolor = white, penwidth=3,color=pink]
-    ",notoriety_bias," -> Rd [label = '+', color = crimson, constraint=false, style = dashed]
-    ",notoriety_bias," -> Re [label = '+', color = crimson, constraint=false, style = dashed]
-    '",outcome_name,"*' -> Re [label = '+', color = black, style = dashed]
-    '",exposure_name,"*' -> Rd [label = '+', color = black, style = dashed]
+    ", notoriety_bias, " -> Rd [label = '+', color = crimson, constraint=false, style = dashed]
+    ", notoriety_bias, " -> Re [label = '+', color = crimson, constraint=false, style = dashed]
+    '", outcome_name, "*' -> Re [label = '+', color = black, style = dashed]
+    '", exposure_name, "*' -> Rd [label = '+', color = black, style = dashed]
     ")
   }
 
   # Add event competition bias if provided
   if (!is.null(event_competition_bias)) {
-    dag <- paste0(dag,"
+    dag <- paste0(dag, "
       subgraph cluster_5 {
       style=bold;
       color=lightgrey;
@@ -232,14 +252,14 @@ create_dag <- function(exposure_name, outcome_name,label_inquiry = "Causal Inqui
     Event2 -> 'Event2*' [label = '+', color = blue, style = dashed]
     'Event2*' -> Re [label = '+', color = blue, style = dashed]}
     Rd [label = 'Re', shape = square, style = filled, fillcolor = white, penwidth=3,color=pink]
-    '",exposure_name,"*' -> Rd [label = '+', color = black, style = dashed]
-    ",exposure_name," -> Event2 [label = '+', color = blue, style = dashed]
-    '",outcome_name,"*' -> Re [label = '+', color = blue, style = dashed]")
+    '", exposure_name, "*' -> Rd [label = '+', color = black, style = dashed]
+    ", exposure_name, " -> Event2 [label = '+', color = blue, style = dashed]
+    '", outcome_name, "*' -> Re [label = '+', color = blue, style = dashed]")
   }
 
   # Add background dilution if provided
   if (!is.null(background_dilution)) {
-    dag <- paste0(dag,"
+    dag <- paste0(dag, "
       subgraph cluster_6 {
       style=bold;
       color=lightgrey;
@@ -256,35 +276,68 @@ create_dag <- function(exposure_name, outcome_name,label_inquiry = "Causal Inqui
     Event3 -> 'Event3*' [color = crimson, style = dashed]
     'Drug3*' -> Rd [label = '+', color = crimson, style = dashed]
     'Event3*' -> Re [label = '+', color = crimson, style = dashed]}
-    '",exposure_name,"*' -> Rd [label = '+', color = crimson, style = dashed]
-    '",outcome_name,"*' -> Re [label = '+', color = crimson, style = dashed]
+    '", exposure_name, "*' -> Rd [label = '+', color = crimson, style = dashed]
+    '", outcome_name, "*' -> Re [label = '+', color = crimson, style = dashed]
 ")
   }
-  dag <- paste0(dag,additional_rows)
+  dag <- paste0(dag, additional_rows)
   # Define ranks for node positioning
-  dag <- paste0(dag,
-                if(!is.null(confounder_path)) {paste0("
-    { rank = same; ", paste0(c(confounder_path$nodes, if(!is.null(surrogate_confounder)){surrogate_confounder$surrogate}), collapse = "; "), " }")},"
-    { rank = same; ",exposure_name," ",if (!is.null(drug_competition_bias)) {"; Drug2"},if (!is.null(background_dilution)) {"; Drug3"}," }
-    { rank = same; ",outcome_name," ",if (!is.null(event_competition_bias)) {"; Event2"},if (!is.null(background_dilution)) {"; Event3"}," }",
-                if(!is.null(collider_path)) {paste0("
-    { rank = same; ", paste0(collider_path$nodes, collapse = "; "), " }")},
-                if(add_measurements) {paste0("
-    { rank = same; '", exposure_name,"*'; '",outcome_name,"*'",
-                                             if (!is.null(drug_competition_bias)) {"; 'Drug2*' "},
-                                             if (!is.null(background_dilution)) {"; 'Drug3*'; 'Event3*' "},
-                                             if (!is.null(event_competition_bias)) {"; 'Event2*' "},
-                                             if (!is.null(collider_path)) {paste0("; ",paste0("'",collider_path$nodes, "*'", collapse = "; "))},
-                                             if (!is.null(confounder_path)) {paste0("; ",paste0("'",confounder_path$nodes, "*'", collapse = "; "))},
-                                             if (!is.null(surrogate_confounder)) {paste0("; '",surrogate_confounder$surrogate, "*'", collapse = "; ")}," }")},
-                ifelse(!is.null(notoriety_bias),
-                       paste0("
-            { rank = same; Rd ; ",notoriety_bias," ; Re}"),
-                       ifelse(!is.null(drug_competition_bias)|!is.null(event_competition_bias)|!is.null(background_dilution),
-                              paste0("
+  dag <- paste0(
+    dag,
+    if (!is.null(confounder_path)) {
+      paste0("
+    { rank = same; ", paste0(c(confounder_path$nodes, if (!is.null(surrogate_confounder)) {
+        surrogate_confounder$surrogate
+      }), collapse = "; "), " }")
+    }, "
+    { rank = same; ", exposure_name, " ", if (!is.null(drug_competition_bias)) {
+      "; Drug2"
+    }, if (!is.null(background_dilution)) {
+      "; Drug3"
+    }, " }
+    { rank = same; ", outcome_name, " ", if (!is.null(event_competition_bias)) {
+      "; Event2"
+    }, if (!is.null(background_dilution)) {
+      "; Event3"
+    }, " }",
+    if (!is.null(collider_path)) {
+      paste0("
+    { rank = same; ", paste0(collider_path$nodes, collapse = "; "), " }")
+    },
+    if (add_measurements) {
+      paste0(
+        "
+    { rank = same; '", exposure_name, "*'; '", outcome_name, "*'",
+        if (!is.null(drug_competition_bias)) {
+          "; 'Drug2*' "
+        },
+        if (!is.null(background_dilution)) {
+          "; 'Drug3*'; 'Event3*' "
+        },
+        if (!is.null(event_competition_bias)) {
+          "; 'Event2*' "
+        },
+        if (!is.null(collider_path)) {
+          paste0("; ", paste0("'", collider_path$nodes, "*'", collapse = "; "))
+        },
+        if (!is.null(confounder_path)) {
+          paste0("; ", paste0("'", confounder_path$nodes, "*'", collapse = "; "))
+        },
+        if (!is.null(surrogate_confounder)) {
+          paste0("; '", surrogate_confounder$surrogate, "*'", collapse = "; ")
+        }, " }"
+      )
+    },
+    ifelse(!is.null(notoriety_bias),
+      paste0("
+            { rank = same; Rd ; ", notoriety_bias, " ; Re}"),
+      ifelse(!is.null(drug_competition_bias) | !is.null(event_competition_bias) | !is.null(background_dilution),
+        paste0("
                     { rank = same; Rd ; Re}"),
-                              ""))
+        ""
+      )
+    )
   )
-  dag <- paste0(dag,"}")
+  dag <- paste0(dag, "}")
   grViz(dag)
 }
