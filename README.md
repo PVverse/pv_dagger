@@ -32,6 +32,9 @@ create_dag("D", "E", scenario = "causal")
 create_dag("D", "E", scenario = "non-causal")
 ```
 
+![“”](man/figures/D_E_inquiry.png) ![“”](man/figures/D_E_causal.png)
+![“”](man/figures/D_E_no.png)
+
 This is how to draw confounders and colliders
 
 ``` r
@@ -43,7 +46,8 @@ create_dag("D", "E", label_inquiry = "", scenario = "non-causal",
                                 label=""))
 ```
 
-This is how to add measurements and draw ascertainment bias
+![“”](man/figures/confounder.png) ![“”](man/figures/collider.png) This
+is how to add measurements and draw ascertainment bias
 
 ``` r
 create_dag("D", "E", scenario = "inquiry", add_measurements = TRUE,
@@ -56,14 +60,15 @@ create_dag("D", "E", scenario = "non-causal", add_measurements = TRUE,
            label_inquiry ="")
 ```
 
-This is how to add reporting
+![“”](man/figures/measurement.png) ![“”](man/figures/ascertainment.png)
+![“”](man/figures/ascertainment_event.png) This is how to add reporting
 
 ``` r
 create_dag("D", "E", scenario = "inquiry", add_measurements = TRUE, add_reporting = TRUE,
            label_inquiry ="")
 ```
 
-This is how to add reporting biases
+![“”](man/figures/reporting.png) This is how to add reporting biases
 
 ``` r
 create_dag("D", "E", scenario = "non-causal",notoriety_bias = "Notoriety", add_measurements = TRUE,
@@ -71,3 +76,8 @@ create_dag("D", "E", scenario = "non-causal",notoriety_bias = "Notoriety", add_m
            event_competition_bias="E2",
            background_dilution =  list(drug="D3",event="E3"))
 ```
+
+<figure>
+<img src="man/figures/reporting_biases.png" alt="“”" />
+<figcaption aria-hidden="true">“”</figcaption>
+</figure>

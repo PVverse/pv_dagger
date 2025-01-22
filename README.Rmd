@@ -17,6 +17,7 @@ knitr::opts_chunk$set(
 # PVdagger
 
 <!-- badges: start -->
+
 <!-- badges: end -->
 
 The goal of PVdagger is to support the visualization and sharing of causal assumptions in pharmacovigilance, using Directed Acyclic Graphs.
@@ -41,6 +42,9 @@ create_dag("D", "E", scenario = "causal")
 create_dag("D", "E", scenario = "non-causal")
 
 ```
+![""](man/figures/D_E_inquiry.png)
+![""](man/figures/D_E_causal.png)
+![""](man/figures/D_E_no.png)
 
 This is how to draw confounders and colliders
 
@@ -53,6 +57,8 @@ create_dag("D", "E", label_inquiry = "", scenario = "non-causal",
                                 label=""))
 ```
 
+![""](man/figures/confounder.png)
+![""](man/figures/collider.png)
 This is how to add measurements and draw ascertainment bias
 
 ```{r, results="hide"}
@@ -66,18 +72,22 @@ create_dag("D", "E", scenario = "non-causal", add_measurements = TRUE,
            label_inquiry ="")
 ```
 
-
+![""](man/figures/measurement.png)
+![""](man/figures/ascertainment.png)
+![""](man/figures/ascertainment_event.png)
 This is how to add reporting
+
 ```{r, results="hide"}
 create_dag("D", "E", scenario = "inquiry", add_measurements = TRUE, add_reporting = TRUE,
            label_inquiry ="")
 ```
-
+![""](man/figures/reporting.png)
 This is how to add reporting biases
+
 ```{r, results="hide"}
 create_dag("D", "E", scenario = "non-causal",notoriety_bias = "Notoriety", add_measurements = TRUE,
            label_inquiry ="Causal Inquiry",drug_competition_bias = "D2",
            event_competition_bias="E2",
            background_dilution =  list(drug="D3",event="E3"))
 ```
-
+![""](man/figures/reporting_biases.png)
