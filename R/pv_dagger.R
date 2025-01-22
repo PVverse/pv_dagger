@@ -13,6 +13,7 @@
 #' @param event_competition_bias Character. The event competition bias variable. By deafault it does not show it.
 #' @param background_dilution List. A list containing the drug and event for background dilution. By deafault it does not show it.
 #' @param add_measurements Logical. Whether to add measurements. Default is FALSE.
+#' @param add_reporting Logical. Whether to add reporting Default is FALSE.
 #' @param ascertainment_drug Character. Whether to draw an ascertainment bias introduced by the drug. Default is NA.
 #' @param ascertainment_event Character. Whether to draw an ascertainment bias introduced by the event. Default is NA.
 #' @param additional_rows Character. Parameter to add more lines for customised DAGs.
@@ -31,6 +32,7 @@ create_dag <- function(exposure_name, outcome_name,label_inquiry = "Causal Inqui
                        notoriety_bias = NULL,
                        drug_competition_bias = NULL, event_competition_bias = NULL,
                        background_dilution = NULL, add_measurements = FALSE,
+                       add_reporting = FALSE,
                        ascertainment_drug=NA,ascertainment_event=NA,
                        additional_rows = "",
                        rankdir="LR",
@@ -164,8 +166,13 @@ create_dag <- function(exposure_name, outcome_name,label_inquiry = "Causal Inqui
     ",outcome_name," -> '", collider_path$nodes[i], "' [label = '", collider_path$signs[i + 1], "', color = ", path_color, "]")
   }
 
-
-
+  # Add reporting if true
+  if (add_reporting == TRUE) {
+    dag <- paste0(dag,"
+    Rd [label = 'Rd', shape = square, style = filled, fillcolor = white, penwidth=3,color=pink]
+    Re [label = 'Re', shape = square, style = filled, fillcolor = white, penwidth=3,color=pink]
+")
+  }
 
 
 

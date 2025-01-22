@@ -16,6 +16,7 @@ create_dag(
   event_competition_bias = NULL,
   background_dilution = NULL,
   add_measurements = FALSE,
+  add_reporting = FALSE,
   ascertainment_drug = NA,
   ascertainment_event = NA,
   additional_rows = "",
@@ -45,6 +46,8 @@ create_dag(
 \item{background_dilution}{List. A list containing the drug and event for background dilution. By deafault it does not show it.}
 
 \item{add_measurements}{Logical. Whether to add measurements. Default is FALSE.}
+
+\item{add_reporting}{Logical. Whether to add reporting Default is FALSE.}
 
 \item{ascertainment_drug}{Character. Whether to draw an ascertainment bias introduced by the drug. Default is NA.}
 
