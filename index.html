@@ -77,6 +77,7 @@
 <span><span class="fu"><a href="reference/create_dag.html">create_dag</a></span><span class="op">(</span><span class="st">"D"</span>,<span class="st">"E"</span>, scenario <span class="op">=</span><span class="st">"inquiry"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="reference/create_dag.html">create_dag</a></span><span class="op">(</span><span class="st">"D"</span>, <span class="st">"E"</span>, scenario <span class="op">=</span> <span class="st">"causal"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="reference/create_dag.html">create_dag</a></span><span class="op">(</span><span class="st">"D"</span>, <span class="st">"E"</span>, scenario <span class="op">=</span> <span class="st">"non-causal"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="reference/figures/D_E_inquiry.png" alt="“”"><img src="reference/figures/D_E_causal.png" alt="“”"><img src="reference/figures/D_E_no.png" alt="“”"></p>
 <p>This is how to draw confounders and colliders</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/create_dag.html">create_dag</a></span><span class="op">(</span><span class="st">"D"</span>, <span class="st">"E"</span>, label_inquiry <span class="op">=</span> <span class="st">""</span>, scenario <span class="op">=</span> <span class="st">"non-causal"</span>,</span>
@@ -85,7 +86,7 @@
 <span><span class="fu"><a href="reference/create_dag.html">create_dag</a></span><span class="op">(</span><span class="st">"D"</span>, <span class="st">"E"</span>, label_inquiry <span class="op">=</span> <span class="st">""</span>, scenario <span class="op">=</span> <span class="st">"non-causal"</span>,</span>
 <span>           collider_path <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>nodes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"F"</span><span class="op">)</span>, signs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">""</span>,<span class="st">""</span><span class="op">)</span>,</span>
 <span>                                label<span class="op">=</span><span class="st">""</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p>This is how to add measurements and draw ascertainment bias</p>
+<p><img src="reference/figures/confounder.png" alt="“”"><img src="reference/figures/collider.png" alt="“”"> This is how to add measurements and draw ascertainment bias</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/create_dag.html">create_dag</a></span><span class="op">(</span><span class="st">"D"</span>, <span class="st">"E"</span>, scenario <span class="op">=</span> <span class="st">"inquiry"</span>, add_measurements <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>           label_inquiry <span class="op">=</span><span class="st">""</span><span class="op">)</span></span>
@@ -95,16 +96,19 @@
 <span><span class="fu"><a href="reference/create_dag.html">create_dag</a></span><span class="op">(</span><span class="st">"D"</span>, <span class="st">"E"</span>, scenario <span class="op">=</span> <span class="st">"non-causal"</span>, add_measurements <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>           ascertainment_event <span class="op">=</span> <span class="st">""</span>,</span>
 <span>           label_inquiry <span class="op">=</span><span class="st">""</span><span class="op">)</span></span></code></pre></div>
-<p>This is how to add reporting</p>
+<p><img src="reference/figures/measurement.png" alt="“”"><img src="reference/figures/ascertainment.png" alt="“”"><img src="reference/figures/ascertainment_event.png" alt="“”"> This is how to add reporting</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/create_dag.html">create_dag</a></span><span class="op">(</span><span class="st">"D"</span>, <span class="st">"E"</span>, scenario <span class="op">=</span> <span class="st">"inquiry"</span>, add_measurements <span class="op">=</span> <span class="cn">TRUE</span>, add_reporting <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>           label_inquiry <span class="op">=</span><span class="st">""</span><span class="op">)</span></span></code></pre></div>
-<p>This is how to add reporting biases</p>
+<p><img src="reference/figures/reporting.png" alt="“”"> This is how to add reporting biases</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/create_dag.html">create_dag</a></span><span class="op">(</span><span class="st">"D"</span>, <span class="st">"E"</span>, scenario <span class="op">=</span> <span class="st">"non-causal"</span>,notoriety_bias <span class="op">=</span> <span class="st">"Notoriety"</span>, add_measurements <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>           label_inquiry <span class="op">=</span><span class="st">"Causal Inquiry"</span>,drug_competition_bias <span class="op">=</span> <span class="st">"D2"</span>,</span>
 <span>           event_competition_bias<span class="op">=</span><span class="st">"E2"</span>,</span>
 <span>           background_dilution <span class="op">=</span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>drug<span class="op">=</span><span class="st">"D3"</span>,event<span class="op">=</span><span class="st">"E3"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<figure><img src="reference/figures/reporting_biases.png" alt="“”"><figcaption aria-hidden="true">
+“”
+</figcaption></figure>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="license">
