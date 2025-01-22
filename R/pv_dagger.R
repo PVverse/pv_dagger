@@ -172,7 +172,7 @@ create_dag <- function(exposure_name, outcome_name,label_inquiry = "Causal Inqui
     Rd [label = 'Rd', shape = square, style = filled, fillcolor = white, penwidth=3,color=pink]
     Re [label = 'Re', shape = square, style = filled, fillcolor = white, penwidth=3,color=pink]
     '",outcome_name,"*' -> Re [label = '+', color = black, style = dashed]
-    '",exposure_name,"*' -> Rd [label = '+', color = blue, style = dashed]
+    '",exposure_name,"*' -> Rd [label = '+', color = black, style = dashed]
 ")
   }
 
