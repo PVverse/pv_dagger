@@ -1,7 +1,7 @@
 Package: PVdagger
 Title: Visualization of Causal Structures in Pharmacovigilance Data Using
     DAGs
-Version: 0.0.0.9000
+Version: 1.0.0
 Authors@R: c(
     person("Michele", "Fusaroli", , "michele.fusaroli@who-umc.org", role = c("aut", "cre")),
     person("Joseph", "Mitchell", , role = c("aut")),
