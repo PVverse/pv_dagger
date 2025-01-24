@@ -2,8 +2,13 @@ Package: PVdagger
 Title: Visualization of Causal Structures in Pharmacovigilance Data Using
     DAGs
 Version: 0.0.0.9000
-Authors@R: 
-    person("Michele", "Fusaroli", , "first.last@example.com", role = c("aut", "cre"))
+Authors@R: c(
+    person("Michele", "Fusaroli", , "michele.fusaroli@who-umc.org", role = c("aut", "cre")),
+    person("Joseph", "Mitchell", , role = c("aut")),
+    person("Annette", "Rudolph", , role = c("aut")),
+    person("Elena", "Rocca", , role = c("aut")),
+    person("Riccardo", "Fusaroli", , role = c("aut"))
+    )
 Description: The PVdagger package provides tools for creating and
     visualizing Directed Acyclic Graphs (DAGs) with various biases and
     paths. This package is particularly useful for researchers and signal
