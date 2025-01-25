@@ -326,14 +326,10 @@ create_dag <- function(exposure_name, outcome_name, label_inquiry = "Causal Inqu
         }, " }"
       )
     },
-    ifelse(!is.null(notoriety_bias),
-      paste0("
-            { rank = same; Rd ; ", notoriety_bias, " ; Re}"),
-      ifelse(!is.null(drug_competition_bias) | !is.null(event_competition_bias) | !is.null(background_dilution),
-        paste0("
+    ifelse(!is.null(notoriety_bias)|!is.null(drug_competition_bias) | !is.null(event_competition_bias) | !is.null(background_dilution),
+           paste0("
                     { rank = same; Rd ; Re}"),
-        ""
-      )
+           ""
     )
   )
   dag <- paste0(dag, "}")
