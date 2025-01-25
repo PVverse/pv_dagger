@@ -302,6 +302,10 @@ create_dag <- function(exposure_name, outcome_name, label_inquiry = "Causal Inqu
       paste0("
     { rank = same; ", paste0(collider_path$nodes, collapse = "; "), " }")
     },
+    if (!is.null(notoriety_bias)) {
+      paste0("
+    { rank = same; ",notoriety_bias, " }")
+    },
     if (add_measurements) {
       paste0(
         "
